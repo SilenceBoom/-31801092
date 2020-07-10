@@ -17,33 +17,44 @@ import cn.edu.zucc.takeaway.util.DbException;
 
 public class UserManager implements IUserManager{
 	public static BeanUser currentLoginUser=null;
-	public BeanUser reg(String userid, String pwd,String pwd2) throws BaseException{
-           Connection conn=null;
-        
+	public BeanUser reg(String userid, String username,String sex,String pwd,String pwd2,String number,String mail,String city,int vip) throws BaseException{
+		if(!pwd.equals(pwd2)) throw new BusinessException("¡Ω¥Œ√‹¬Î ‰»Î≤ª“ª÷¬");
+		Connection conn=null;       
 		try{
+			java.text.SimpleDateFormat time=new java.text.SimpleDateFormat("yyyy-MM-dd");
+			java.util.Date t=time.parse("2020-8-15");
+			java.util.Date t1=time.parse(time.format(System.currentTimeMillis()));
 			conn=DBUtil.getConnection();
-			String sql="select * from user where userId=?";
+			String sql="insert into user(userId,userName,userSex,userPwd,userPhoneNumber,userMail,userCity,registerTime,isVIP,VIPdeadline) values(?,?,?,?,?,?,?,?,?,?)";
 			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
 			pst.setString(1,userid);
-			java.sql.ResultSet rs=pst.executeQuery();
-			if(!rs.next()) throw new BusinessException("µ«¬Ω’À∫≈≤ª¥Ê‘⁄");	
+			pst.setString(2, username);
+			pst.setString(3, sex);
+			pst.setString(4, pwd);
+			pst.setString(5, number);
+			pst.setString(6, mail);
+			pst.setString(7, city);
+			pst.setDate(8, new java.sql.Date(t1.getTime()));
+			pst.setInt(9,vip);
+			if(vip==0)
+				pst.setDate(10, null);
+			else if(vip==1)
+				pst.setDate(10,new java.sql.Date(t.getTime()));
+	        pst.execute();
 			BeanUser user=new BeanUser();
 			user.setUserid(userid);
-			user.setUsername(rs.getString(2));
-			user.setUsersex(rs.getString(3));
-			user.setUserpwd(rs.getString(4));
-			user.setUserphonenumber(rs.getString(5));
-			user.setUsermail(rs.getString(6));
-			user.setUsercity(rs.getString(7));
-			user.setRegistertime(rs.getDate(8));
-			user.setIsvip(rs.getInt(9));
-			user.setVipdeadline(rs.getDate(10));
-			
-			if(!pwd.equals(user.getUserpwd())) throw new BusinessException("µ«¬º√‹¬Î¥ÌŒÛ");
-			rs.close();
+			user.setUsername(username);
+			user.setUsersex(sex);
+			user.setUserpwd(pwd);
+			user.setUserphonenumber(number);
+			user.setUsermail(mail);
+			user.setUsercity(city);
+			user.setRegistertime(new java.sql.Date(t1.getTime()));
+			user.setIsvip(vip);
+			user.setVipdeadline(new java.sql.Date(t.getTime()));
 			pst.close();	
 			return user;
-		}catch (SQLException e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 			throw new DbException(e);
 		}

@@ -89,7 +89,45 @@ public class MerchantManager implements IMerchantManager{
 			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
 			pst.setString(1, merchant.getMerchantname());
 			pst.execute();
+			sql="update merchant set merchantId=merchantId-1 where merchantId>?";
+			pst=conn.prepareStatement(sql);
+			pst.setInt(1, merchant.getMerchantid());
+			pst.execute();
 			pst.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+	public List<BeanPro> loadallP(BeanMerchant mer)throws BaseException{
+		List<BeanPro> result=new ArrayList<BeanPro>();
+		Connection conn=null;
+		try {
+			
+			conn=DBUtil.getConnection();
+			String sql="select productName,productPrice,sortName from products where merchantId=? order by productId";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			pst.setInt(1, mer.getMerchantid());
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next()) {
+				 BeanPro p=new BeanPro();
+				 p.setProductName(rs.getString(1));
+				 p.setProductPrice(rs.getDouble(2));
+				 p.setSortName(rs.getString(3));
+		         result.add(p);
+			}
+		    rs.close();
+		    pst.close();
+		    return result;
 		}catch (SQLException e) {
 			e.printStackTrace();
 			throw new DbException(e);

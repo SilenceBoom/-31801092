@@ -101,10 +101,24 @@ public class FrmUserRegister extends JDialog implements ActionListener {
 			this.setVisible(false);
 		else if(e.getSource()==this.btnOk){
 			String userid=this.edtUserId.getText();
+		    String name=this.edtName.getText();
 			String pwd1=new String(this.edtPwd.getPassword());
 			String pwd2=new String(this.edtPwd2.getPassword());
+			String sex=null;
+			if(this.man.isSelected())
+				 sex="ÄÐ";
+			else if(this.woman.isSelected())
+				 sex="Å®";
+			String number=this.edtPhone.getText();
+			String mail=this.edtMail.getText();
+			String city=this.edtCity.getText();
+			int vip=2;
+			if(this.yes.isSelected())
+				vip=1;
+			else if(this.no.isSelected())
+				vip=0;
 			try {
-				BeanUser user=TakeAwayUtil.userManager.reg(userid, pwd1, pwd2);
+				BeanUser user=TakeAwayUtil.userManager.reg(userid, name,sex,pwd1, pwd2,number,mail,city,vip);
 				this.setVisible(false);
 			} catch (BaseException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage(),"´íÎó",JOptionPane.ERROR_MESSAGE);

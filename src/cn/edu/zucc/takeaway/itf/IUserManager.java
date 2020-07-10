@@ -7,7 +7,7 @@ import cn.edu.zucc.takeaway.model.BeanUser;
 import cn.edu.zucc.takeaway.util.BaseException;
 
 public interface IUserManager {
-	public BeanUser reg(String userid, String pwd,String pwd2) throws BaseException;
+	public BeanUser reg(String userid, String username,String sex,String pwd,String pwd2,String number,String mail,String city,int vip) throws BaseException;
 	public BeanUser login(String userid,String pwd)throws BaseException;
 	public List<BeanUser> loadall() throws BaseException;
 	public BeanUser search(String userid)throws BaseException;
