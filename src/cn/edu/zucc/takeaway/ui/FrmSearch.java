@@ -1,6 +1,8 @@
 package cn.edu.zucc.takeaway.ui;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
+import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -11,6 +13,7 @@ import java.util.List;
 
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -23,6 +26,9 @@ import cn.edu.zucc.takeaway.util.BaseException;
 
       
 public class FrmSearch extends JDialog implements ActionListener{
+	private JPanel toolBar = new JPanel();
+	private Button btnAdd = new Button("添加");
+	private Button btnBuy = new Button("购物车");
 	List<BeanMerchant> merchant=null;
 	private Object tblTitle[]=BeanMerchant.tableTitles;
 	private Object tblData[][];
@@ -75,6 +81,10 @@ public class FrmSearch extends JDialog implements ActionListener{
 	}
 	public FrmSearch(Frame f,String s,boolean b) {
 		super(f,s,b);
+		toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		toolBar.add(this.btnBuy);
+		toolBar.add(this.btnAdd);
+		this.getContentPane().add(toolBar, BorderLayout.SOUTH);
 		this.setSize(800, 520);
 		// 屏幕居中显示
 		double width = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
@@ -98,11 +108,34 @@ public class FrmSearch extends JDialog implements ActionListener{
 	    });
 	    this.getContentPane().add(new JScrollPane(this.dataTablePro), BorderLayout.CENTER);
 	    this.reloadMerchant();
+	    this.btnBuy.addActionListener(this);
+	    this.btnAdd.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getSource()==this.btnBuy) {
+			FrmBuy dlg=new FrmBuy(this,"购物车",true);
+			dlg.setVisible(true);
+		}
+		if(e.getSource()==this.btnAdd) {
+			int i=this.dataTablePro.getSelectedRow();
+    	    if(i<0) {
+  				JOptionPane.showMessageDialog(null,  "请选择商品","提示",JOptionPane.ERROR_MESSAGE);
+  				return;
+  			  }
+        	  try {
+    		      FrmAddPro dlg=new FrmAddPro(this,"选择数量",true);
+    		      dlg.setVisible(true);
+  			
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+    	    
+      
+		}
 		
 	}
 

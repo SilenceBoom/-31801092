@@ -114,7 +114,7 @@ public class MerchantManager implements IMerchantManager{
 		try {
 			
 			conn=DBUtil.getConnection();
-			String sql="select productName,productPrice,sortName from products where merchantId=? order by productId";
+			String sql="select productName,productPrice,sortName,count from products where merchantId=? order by productId";
 			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
 			pst.setInt(1, mer.getMerchantid());
 			java.sql.ResultSet rs=pst.executeQuery();
@@ -123,6 +123,43 @@ public class MerchantManager implements IMerchantManager{
 				 p.setProductName(rs.getString(1));
 				 p.setProductPrice(rs.getDouble(2));
 				 p.setSortName(rs.getString(3));
+				 p.setCount(rs.getInt(4));
+		         result.add(p);
+			}
+		    rs.close();
+		    pst.close();
+		    return result;
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+	@Override
+	public List<BeanBuy> loadallPro() throws BaseException {
+		// TODO Auto-generated method stub
+		List<BeanBuy> result=new ArrayList<BeanBuy>();
+		Connection conn=null;
+try {
+			
+			conn=DBUtil.getConnection();
+			String sql="select * from buy";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next()) {
+				 BeanBuy p=new BeanBuy();
+				 p.setProductName(rs.getString(1));
+				 p.setProductSort(rs.getString(2));
+				 p.setUnitPrice(rs.getDouble(3));
+				 p.setBuyCount(rs.getInt(4));
 		         result.add(p);
 			}
 		    rs.close();

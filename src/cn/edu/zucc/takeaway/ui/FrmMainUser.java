@@ -39,7 +39,6 @@ public class FrmMainUser  extends JFrame implements ActionListener{
 		private JMenuItem menuItem_MyAdd=new JMenuItem("我的地址");
 		private JMenuItem menuItem_order=new JMenuItem("我的订单");
 		private JMenuItem menuItem_search=new JMenuItem("发现美食");
-		private JMenuItem menuItem_buy=new JMenuItem("购物车");
 		private JPanel statusBar = new JPanel();
 		public FrmMainUser() throws IOException{
 			this.setExtendedState(Frame.MAXIMIZED_BOTH);
@@ -57,9 +56,7 @@ public class FrmMainUser  extends JFrame implements ActionListener{
 		    menu_order.add(menuItem_order);
 		    menuItem_order.addActionListener(this);
 		    menu_search.add(menuItem_search);
-		    menuItem_search.addActionListener(this);
-		    menu_search.add(menuItem_buy);
-		    menuItem_buy.addActionListener(this);
+		    menuItem_search.addActionListener(this);;
 		    
 		    menuber.add(menu_search);
 		    menuber.add(menu_order);

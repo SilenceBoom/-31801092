@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,7 +24,7 @@ import cn.edu.zucc.takeaway.ui.*;
 public class FrmMyInf extends JDialog implements ActionListener{
 	private JPanel toolBar = new JPanel();
 	private JPanel workPane = new JPanel();
-	private Button btnChangePwd = new Button("修改密码");
+	private JButton btnChangePwd = new JButton("修改密码");
 //	private Button btnChangeAdd = new Button("修改地址");
 	private JLabel labelUser = new JLabel("<html><p> 用户编号："+BeanUser.currentLoginUser.getUserid()+"<br>"+"<br>"
 	        +"用户姓名："+BeanUser.currentLoginUser.getUsername()+"<br>"+"<br>"

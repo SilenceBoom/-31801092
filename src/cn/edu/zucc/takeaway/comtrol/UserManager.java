@@ -7,6 +7,8 @@ import java.util.List;
 
 import cn.edu.zucc.takeaway.itf.IUserManager;
 import cn.edu.zucc.takeaway.model.BeanAddress;
+import cn.edu.zucc.takeaway.model.BeanOrder1;
+import cn.edu.zucc.takeaway.model.BeanOrder2;
 import cn.edu.zucc.takeaway.model.BeanRider;
 import cn.edu.zucc.takeaway.model.BeanSystemUser;
 import cn.edu.zucc.takeaway.model.BeanUser;
@@ -318,6 +320,78 @@ public class UserManager implements IUserManager{
 				}
 		}
 		
+	}
+	public List<BeanOrder1> loadallorder() throws BaseException{
+		List<BeanOrder1> result=new ArrayList<BeanOrder1>();
+		Connection conn=null;
+		try {
+			
+			conn=DBUtil.getConnection();
+			String sql="select * from order1";
+			java.sql.Statement st=conn.createStatement();
+			java.sql.ResultSet rs=st.executeQuery(sql);
+			while(rs.next()) {
+				 BeanOrder1 p=new BeanOrder1();
+				 p.setMerchantName(rs.getString(1));
+				 p.setSum(rs.getDouble(2));
+		         result.add(p);
+			}
+		    rs.close();
+		    st.close();
+			return result;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+	public List<BeanOrder2> loadallorder2(BeanOrder1 order) throws BaseException{
+		List<BeanOrder2> result=new ArrayList<BeanOrder2>();
+		Connection conn=null;
+		try {
+			
+			conn=DBUtil.getConnection();
+			String sql="select * from order2 where merchantName = '"+order.getMerchantName()+"'";
+			java.sql.Statement st=conn.createStatement();
+			java.sql.ResultSet rs=st.executeQuery(sql);
+			while(rs.next()) {
+				 BeanOrder2 p=new BeanOrder2();
+				 p.setMerchantname(rs.getString(1));
+				 p.setInitamount(rs.getDouble(2));
+				 p.setSettamount(rs.getDouble(3));
+				 p.setRidername(rs.getString(4));
+				 p.setOrdertime(rs.getDate(5));
+				 p.setAddress(rs.getString(6));
+				 p.setUsername(rs.getString(7));
+				 p.setUsernumber(rs.getString(8));;
+		         result.add(p);
+			}
+		    rs.close();
+		    st.close();
+			return result;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
 	}
 
 }

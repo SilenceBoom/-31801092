@@ -9,6 +9,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +23,7 @@ import cn.edu.zucc.takeaway.util.BaseException;
 public class FrmMyAdd extends JDialog implements ActionListener{
 	private JPanel toolBar = new JPanel();
 	private JPanel workPane = new JPanel();
-	private Button btnChangeAdd = new Button("修改地址");
+	private JButton btnChangeAdd = new JButton("修改地址");
 	private JTextField edtAddress = new JTextField(20);
 	private JLabel labelAdd = new JLabel("<html><p> 我的地址："+"<br>"+TakeAwayUtil.userManager.getAddress(BeanUser.currentLoginUser).getAddress()+"<p><html>");
 	public FrmMyAdd(Frame f,String s,boolean b) throws BaseException{

@@ -3,6 +3,8 @@ package cn.edu.zucc.takeaway.itf;
 import java.util.List;
 
 import cn.edu.zucc.takeaway.model.BeanAddress;
+import cn.edu.zucc.takeaway.model.BeanOrder1;
+import cn.edu.zucc.takeaway.model.BeanOrder2;
 import cn.edu.zucc.takeaway.model.BeanUser;
 import cn.edu.zucc.takeaway.util.BaseException;
 
@@ -16,4 +18,6 @@ public interface IUserManager {
 	public void changePwd(BeanUser user ,String old,String new1,String new2) throws BaseException;
 	public BeanAddress getAddress(BeanUser user) throws BaseException;
 	public void toBeVip()throws BaseException;
+	public List<BeanOrder1> loadallorder() throws BaseException;
+	public List<BeanOrder2> loadallorder2(BeanOrder1 order) throws BaseException;
 }

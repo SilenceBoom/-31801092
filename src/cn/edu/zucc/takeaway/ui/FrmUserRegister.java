@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,8 +26,8 @@ import cn.edu.zucc.takeaway.util.BaseException;
 public class FrmUserRegister extends JDialog implements ActionListener {
 	private JPanel toolBar = new JPanel();
 	private JPanel workPane = new JPanel();
-	private Button btnOk = new Button("注册");
-	private Button btnCancel = new Button("取消");
+	private JButton btnOk = new JButton("注册");
+	private JButton btnCancel = new JButton("取消");
 	
 	private JLabel labelUser = new JLabel("用户账号：");
 	private JLabel labelName = new JLabel("用户姓名：");
