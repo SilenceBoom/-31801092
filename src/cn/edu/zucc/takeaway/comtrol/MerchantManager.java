@@ -156,10 +156,10 @@ try {
 			java.sql.ResultSet rs=pst.executeQuery();
 			while(rs.next()) {
 				 BeanBuy p=new BeanBuy();
-				 p.setProductName(rs.getString(1));
-				 p.setProductSort(rs.getString(2));
-				 p.setUnitPrice(rs.getDouble(3));
-				 p.setBuyCount(rs.getInt(4));
+				 p.setProductName(rs.getString(2));
+				 p.setProductSort(rs.getString(3));
+				 p.setUnitPrice(rs.getDouble(4));
+				 p.setBuyCount(rs.getInt(5));
 		         result.add(p);
 			}
 		    rs.close();

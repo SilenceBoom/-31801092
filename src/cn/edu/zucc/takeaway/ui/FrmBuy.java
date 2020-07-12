@@ -25,6 +25,8 @@ import cn.edu.zucc.takeaway.util.BaseException;
 
 public class FrmBuy extends JDialog implements ActionListener{
 	private Button btnSett=new Button("结算");
+	private Button btnClear=new Button("清空购物车");
+	private Button btnDelete=new Button("删除商品");
 	private JPanel toolBar = new JPanel();
 	List<BeanBuy> product=null;
 	private Object tblTitle[]=BeanBuy.tableTitles;
@@ -50,7 +52,9 @@ public class FrmBuy extends JDialog implements ActionListener{
 		}
 	public FrmBuy(JDialog f,String s,boolean b) {
 		super(f,s,b);
-		toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));		
+		toolBar.add(this.btnDelete);
+		toolBar.add(this.btnClear);
 		toolBar.add(this.btnSett);
 		this.getContentPane().add(toolBar, BorderLayout.SOUTH);
 		this.setSize(350, 520);
@@ -63,11 +67,43 @@ public class FrmBuy extends JDialog implements ActionListener{
 		this.validate();
 		this.getContentPane().add(new JScrollPane(this.dataTable), BorderLayout.CENTER);
 		this.reloadPro();
+		this.btnClear.addActionListener(this);
+		this.btnDelete.addActionListener(this);
+		this.btnSett.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getSource()==this.btnClear) {
+			try{
+				TakeAwayUtil.userManager.initBuy();
+				this.reloadPro();
+			}catch(BaseException ex) {
+				JOptionPane.showMessageDialog(null, ex.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
+		else if(e.getSource()==this.btnDelete) {
+			int i=this.dataTable.getSelectedRow();
+    	    if(i<0) {
+  				JOptionPane.showMessageDialog(null,  "请选择商品","提示",JOptionPane.ERROR_MESSAGE);
+  				return;
+  			  }
+    	    try {
+      		  BeanBuy p=product.get(i);
+      		  TakeAwayUtil.userManager.deletePro(p);
+  		      this.reloadPro();
+			
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
+		else if(e.getSource()==this.btnSett) {
+			FrmSettlement dlg=new FrmSettlement(this,"结算页面",true);
+			dlg.setVisible(true);
+		}
 		
 	}
 	

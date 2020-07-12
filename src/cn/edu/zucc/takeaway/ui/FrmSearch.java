@@ -126,6 +126,8 @@ public class FrmSearch extends JDialog implements ActionListener{
   				return;
   			  }
         	  try {
+        		  BeanPro p=product.get(i);
+        		  TakeAwayUtil.userManager.Add(p);
     		      FrmAddPro dlg=new FrmAddPro(this,"Ñ¡ÔñÊýÁ¿",true);
     		      dlg.setVisible(true);
   			

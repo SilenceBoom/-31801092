@@ -7,8 +7,10 @@ import java.util.List;
 
 import cn.edu.zucc.takeaway.itf.IUserManager;
 import cn.edu.zucc.takeaway.model.BeanAddress;
+import cn.edu.zucc.takeaway.model.BeanBuy;
 import cn.edu.zucc.takeaway.model.BeanOrder1;
 import cn.edu.zucc.takeaway.model.BeanOrder2;
+import cn.edu.zucc.takeaway.model.BeanPro;
 import cn.edu.zucc.takeaway.model.BeanRider;
 import cn.edu.zucc.takeaway.model.BeanSystemUser;
 import cn.edu.zucc.takeaway.model.BeanUser;
@@ -392,6 +394,164 @@ public class UserManager implements IUserManager{
 					e.printStackTrace();
 				}
 		}
+	}
+	public void Add(BeanPro product)throws BaseException{
+		Connection conn=null;
+		try {
+			
+			conn=DBUtil.getConnection();
+			String sql="insert into buy(productName,productSort,unitPrice,buyCount) values(?,?,?,0)";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			pst.setString(1, product.getProductName());
+			pst.setString(2, product.getSortName());
+			pst.setDouble(3, product.getProductPrice());
+			pst.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+	public void changeCount(int n)throws BaseException{
+		Connection conn=null;
+		try {
+			int orderid=0;
+			int count=0;
+			String productName=null;
+			conn=DBUtil.getConnection();
+			String sql="select max(prorder)from buy";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next())
+			{
+				orderid=rs.getInt(1);	
+			}
+			rs.close();
+			sql="select productName from buy where prorder=?";
+			pst=conn.prepareStatement(sql);
+			pst.setInt(1, orderid);
+			rs=pst.executeQuery();
+			while(rs.next()) {
+				productName=rs.getString(1);
+			}
+			rs.close();
+			sql="select count(productName) from buy where productName=?";
+			pst=conn.prepareStatement(sql);
+			pst.setString(1, productName);
+			rs=pst.executeQuery();
+			while(rs.next()) {
+				count=rs.getInt(1);
+			}
+			rs.close();
+			if(count>1) {
+				sql="delete from buy where prorder="+orderid;
+				pst=conn.prepareStatement(sql);
+				pst.execute();
+			}
+			sql="update buy set buyCount=buyCount+? where productName=?";
+			pst=conn.prepareStatement(sql);
+			pst.setInt(1, n);
+			pst.setString(2,productName);
+			pst.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+	public void deleteAdd()throws BaseException{
+		Connection conn=null;
+		try {
+			int orderid=0;
+			conn=DBUtil.getConnection();
+			String sql="select max(prorder) from buy";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next())
+			{
+				orderid=rs.getInt(1);
+			}
+			sql="delete from buy where prorder=?";
+			pst=conn.prepareStatement(sql);
+			pst.setInt(2,orderid );
+			pst.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+	public void initBuy ()throws BaseException{
+		Connection conn=null;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="delete from buy";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			pst.execute();
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+	public void deletePro(BeanBuy buy)throws BaseException{
+			Connection conn=null;
+			try {
+				conn=DBUtil.getConnection();
+				String sql="delete from buy where productName=?";
+				java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+				pst.setString(1, buy.getProductName());
+				pst.execute();
+			}
+			catch (SQLException e) {
+				e.printStackTrace();
+				throw new DbException(e);
+			}
+			finally{
+				if(conn!=null)
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
 	}
 
 }

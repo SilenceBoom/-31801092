@@ -10,8 +10,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import cn.edu.zucc.takeaway.TakeAwayUtil;
+import cn.edu.zucc.takeaway.model.BeanOrder2;
+import cn.edu.zucc.takeaway.model.BeanPro;
+import cn.edu.zucc.takeaway.util.BaseException;
 
 public class FrmAddPro extends JDialog implements ActionListener{
 	private JPanel toolBar = new JPanel();
@@ -24,7 +30,7 @@ public class FrmAddPro extends JDialog implements ActionListener{
 		super(f,s,b);
 		toolBar.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		toolBar.add(this.btnOk);
-		toolBar.add(btnCancel);
+		toolBar.add(this.btnCancel);
 		this.getContentPane().add(toolBar, BorderLayout.SOUTH);
 		workPane.add(lebelselect);
 		workPane.add(edtCount);
@@ -36,11 +42,33 @@ public class FrmAddPro extends JDialog implements ActionListener{
 				(int) (height - this.getHeight())/2 );
 
 		this.validate();
+		this.btnOk.addActionListener(this);
+		this.btnCancel.addActionListener(this);
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getSource()==this.btnOk) {
+			int n=Integer.valueOf(this.edtCount.getText());
+			try{
+				TakeAwayUtil.userManager.changeCount(n);
+				this.setVisible(false);
+			}catch(BaseException ex) {
+				JOptionPane.showMessageDialog(null, ex.getMessage(), "´íÎó",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
+		else if(e.getSource()==this.btnCancel) {
+			try{
+				TakeAwayUtil.userManager.deleteAdd();
+				this.setVisible(false);
+			}catch(BaseException ex) {
+				JOptionPane.showMessageDialog(null, ex.getMessage(), "´íÎó",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
 		
 	}
 
