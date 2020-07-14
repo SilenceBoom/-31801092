@@ -13,6 +13,45 @@ import cn.edu.zucc.takeaway.util.DBUtil;
 import cn.edu.zucc.takeaway.util.DbException;
 
 public class MerchantManager implements IMerchantManager{
+	public void reg(String name,int star,double rjxf,int count) throws BaseException{
+		
+		Connection conn=null;
+		try {
+			int merchantid=0;
+			conn=DBUtil.getConnection();
+			String sql="select * from merchant where merchantName=?";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			pst.setString(1, name);
+			java.sql.ResultSet rs=pst.executeQuery();
+			if(rs.next()) throw new BusinessException("该商家已被注册");
+			sql="select * from merchant";
+			pst=conn.prepareStatement(sql);
+			rs=pst.executeQuery();
+			while(rs.next()) {
+				merchantid=rs.getInt(1)+1;
+			}
+			sql="insert into merchant(merchantId,merchantName,merchantLevel,avgConsume,sumCount) values(?,?,?,?,?)";
+			pst=conn.prepareStatement( sql);
+			pst.setInt(1, merchantid);
+			pst.setString(2, name);
+			pst.setInt(3,star);
+			pst.setDouble(4, rjxf);
+			pst.setInt(5, count);
+			pst.execute();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
 	public List<BeanMerchant> loadall()throws BaseException{
 		List<BeanMerchant> result=new ArrayList<BeanMerchant>();
 		Connection conn=null;
@@ -53,7 +92,7 @@ public class MerchantManager implements IMerchantManager{
 		Connection conn=null;
 		try {
 			conn=DBUtil.getConnection();
-			String sql="select * from merchant where merchantName=?";
+			String sql="select * from merchant where merchantName = ?";
 			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
 			pst.setString(1, name);
 			java.sql.ResultSet rs=pst.executeQuery();

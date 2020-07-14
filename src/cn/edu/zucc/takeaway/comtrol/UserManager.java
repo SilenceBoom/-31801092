@@ -553,5 +553,33 @@ public class UserManager implements IUserManager{
 					}
 			}
 	}
+	public double settlement() throws BaseException{
+		Connection conn=null;
+		List<BeanBuy> result=new ArrayList<BeanBuy>();
+		double sum=0;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="select unitPrice,buyCount from buy";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			java.sql.ResultSet rs=pst.executeQuery();
+			while(rs.next()) {
+				sum=sum+rs.getDouble(1)*rs.getInt(2);
+			}
+			return sum;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
 
 }

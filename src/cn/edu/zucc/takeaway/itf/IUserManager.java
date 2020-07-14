@@ -27,4 +27,5 @@ public interface IUserManager {
 	public void deleteAdd()throws BaseException;
 	public void initBuy ()throws BaseException;
 	public void deletePro(BeanBuy buy)throws BaseException;
+	public double settlement() throws BaseException;
 }

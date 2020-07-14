@@ -101,8 +101,14 @@ public class FrmBuy extends JDialog implements ActionListener{
 			}
 		}
 		else if(e.getSource()==this.btnSett) {
-			FrmSettlement dlg=new FrmSettlement(this,"结算页面",true);
-			dlg.setVisible(true);
+			try{
+				FrmSettlement dlg=new FrmSettlement(this,"结算页面",true);
+				dlg.setVisible(true);
+			}catch(BaseException ex) {
+				JOptionPane.showMessageDialog(null, ex.getMessage(), "错误",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
 		}
 		
 	}

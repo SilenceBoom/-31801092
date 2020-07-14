@@ -103,5 +103,29 @@ public class RiderManager implements IRiderManager{
 				}
 		}
 	}
+	public void Reg(String name,String identity) throws BaseException{
+		Connection conn=null;
+		try {
+			conn=DBUtil.getConnection();
+			String sql="insert into rider(riderName,inDate,identity) values(?,now(),?)";		
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			pst.setString(1, name);
+			pst.setString(2, identity);
+			pst.execute();
+			pst.close();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
 
 }

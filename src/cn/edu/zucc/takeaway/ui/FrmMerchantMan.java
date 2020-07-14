@@ -32,6 +32,7 @@ public class FrmMerchantMan extends JDialog implements ActionListener{
 	private JPanel workPane = new JPanel();
 	private Button btnSearch = new Button("查询商家");
 	private Button btnCancel = new Button("删除商家");
+	private Button btnAdd = new Button("添加商家");
 	private Button btnNew = new Button("刷新");
 	private JTextField edtName = new JTextField(10);
 	private Object tblTitle[]=BeanMerchant.tableTitles;
@@ -85,6 +86,7 @@ public class FrmMerchantMan extends JDialog implements ActionListener{
 		this.getContentPane().add(workPane,BorderLayout.WEST);
 		toolBar.add(this.btnSearch);
 		toolBar.add(this.btnCancel);
+		toolBar.add(this.btnAdd);
 		toolBar.add(this.btnNew);
 		this.getContentPane().add(toolBar);
 		this.setSize(800, 520);
@@ -97,6 +99,7 @@ public class FrmMerchantMan extends JDialog implements ActionListener{
 		this.validate();
 		this.btnSearch.addActionListener(this);
 		this.btnCancel.addActionListener(this);
+		this.btnAdd.addActionListener(this);
 		this.btnNew.addActionListener(this);
 		JScrollPane scrollPane_1 = new JScrollPane(this.dataTable);
 		this.getContentPane().add(scrollPane_1, BorderLayout.AFTER_LAST_LINE);
@@ -127,6 +130,10 @@ public class FrmMerchantMan extends JDialog implements ActionListener{
 						return;
 					}
 		    	    
+		      }
+		      else if(e.getSource()==this.btnAdd) {
+		    	  FrmMerchantReg dlg=new FrmMerchantReg(this,"商家注册",true);
+		    	  dlg.setVisible(true);
 		      }
 		      else if(e.getSource()==this.btnNew) {
 		    	  this.reloadTable();

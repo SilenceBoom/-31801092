@@ -23,6 +23,7 @@ public class FrmMyVip extends JDialog implements ActionListener{
 	private JPanel workPane = new JPanel();
 	private JButton btnwant=new JButton("成为会员");
 	private JButton btncontu=new JButton("续费会员");
+	private JButton btntake=new JButton("会员每月领取4张优惠券");
 	private JLabel labelInf=new JLabel("<html><p>用户姓名："+BeanUser.currentLoginUser.getUsername()+"<br>"+"会员截止日期："+BeanUser.currentLoginUser.getVipdeadline()+"<p><html>");
 	public FrmMyVip(Frame f,String s,boolean b) {
 		super(f,s,b);

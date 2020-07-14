@@ -9,6 +9,7 @@ import cn.edu.zucc.takeaway.model.BeanProduct;
 import cn.edu.zucc.takeaway.util.BaseException;
 
 public interface IMerchantManager {
+	public void reg(String name,int star,double rjxf,int count) throws BaseException;
 	
 	public List<BeanMerchant> loadall() throws BaseException;
 	

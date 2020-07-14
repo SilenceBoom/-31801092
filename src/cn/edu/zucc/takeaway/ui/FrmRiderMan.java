@@ -28,6 +28,7 @@ public class FrmRiderMan extends JDialog implements ActionListener{
 	private JPanel workPane = new JPanel();
 	private Button btnSearch = new Button("≤È—Ø∆Ô ÷");
 	private Button btnCancel = new Button("…æ≥˝∆Ô ÷");
+	private Button btnReg = new Button("◊¢≤·∆Ô ÷");
 	private Button btnNew = new Button("À¢–¬");
 	private JTextField edtName = new JTextField(10);
 	private Object tblTitle[]=BeanRider.tableTitles;
@@ -81,6 +82,7 @@ public class FrmRiderMan extends JDialog implements ActionListener{
 		this.getContentPane().add(workPane,BorderLayout.WEST);
 		toolBar.add(this.btnSearch);
 		toolBar.add(this.btnCancel);
+		toolBar.add(this.btnReg);
 		toolBar.add(this.btnNew);
 		this.getContentPane().add(toolBar);
 		this.setSize(800, 520);
@@ -94,6 +96,7 @@ public class FrmRiderMan extends JDialog implements ActionListener{
 		this.btnNew.addActionListener(this);
 		this.btnSearch.addActionListener(this);
 		this.btnCancel.addActionListener(this);
+		this.btnReg.addActionListener(this);
 		JScrollPane scrollPane_1 = new JScrollPane(this.dataTable);
 		this.getContentPane().add(scrollPane_1, BorderLayout.AFTER_LAST_LINE);
 		scrollPane_1.setColumnHeaderView(scroll);
@@ -128,6 +131,10 @@ public class FrmRiderMan extends JDialog implements ActionListener{
 		      }
 		      else if(e.getSource()==this.btnNew) {
 		    	  this.reloadTable();
+		      }
+		      else if(e.getSource()==this.btnReg) {
+		    	  FrmRiderReg dlg=new FrmRiderReg(this,"∆Ô ÷◊¢≤·",true);
+		    	  dlg.setVisible(true);
 		      }
 	}
 	

@@ -34,10 +34,12 @@ public class FrmMainSystemUser extends JFrame implements ActionListener{
 		private JMenu menu_merchant=new JMenu("商家       ");	                                                                      
 		private JMenu menu_rider=new JMenu("骑手       ");
 		private JMenu menu_user=new JMenu("用户       ");
+		private JMenu menu_coupon=new JMenu("优惠券     ");
 		private JMenu menu_systemuser=new JMenu("管理员");
 		private JMenuItem menuItem_MerchantInf=new JMenuItem("商家管理");
-
+		private JMenuItem menuItem_Coupon=new JMenuItem("优惠券管理");
 		private JMenuItem menuItem_RiderMan=new JMenuItem("骑手管理");
+		private JMenuItem menuItem_RiderInf=new JMenuItem("骑手接单");
 		private JMenuItem menuItem_UserInf=new JMenuItem("用户管理");
 		private JMenuItem menuItem_SystemUserCha=new JMenuItem("密码修改");
 		
@@ -53,14 +55,19 @@ public class FrmMainSystemUser extends JFrame implements ActionListener{
 		    menuItem_MerchantInf.addActionListener(this);
 		    menu_rider.add(menuItem_RiderMan);
 		    menuItem_RiderMan.addActionListener(this);
+		    menu_rider.add(menuItem_RiderInf);
+		    menuItem_RiderInf.addActionListener(this);
 		    menu_user.add(menuItem_UserInf);
 		    menuItem_UserInf.addActionListener(this);
+		    menu_coupon.add(menuItem_Coupon);
+		    menuItem_Coupon.addActionListener(this);
 		    menu_systemuser.add(menuItem_SystemUserCha);
 		    menuItem_SystemUserCha.addActionListener(this);
 		    
 		
 		    menuber.add(menu_merchant);
 		    menuber.add(menu_rider);
+		    menuber.add(menu_coupon);
 		    menuber.add(menu_user);
 		    menuber.add(menu_systemuser);
 		    this.setJMenuBar(menuber);

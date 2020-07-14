@@ -11,5 +11,7 @@ public interface IRiderManager {
     public BeanRider search(String name)throws BaseException;
 	
 	public void delete(BeanRider rider) throws BaseException;
+	
+	public void Reg(String name,String identity) throws BaseException;
 
 }
