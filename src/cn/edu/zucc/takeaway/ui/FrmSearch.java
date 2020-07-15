@@ -22,6 +22,7 @@ import cn.edu.zucc.takeaway.TakeAwayUtil;
 import cn.edu.zucc.takeaway.model.BeanMerchant;
 import cn.edu.zucc.takeaway.model.BeanPro;
 import cn.edu.zucc.takeaway.model.BeanProduct;
+import cn.edu.zucc.takeaway.model.BeanUser;
 import cn.edu.zucc.takeaway.util.BaseException;
 
       
@@ -62,6 +63,7 @@ public class FrmSearch extends JDialog implements ActionListener{
 	public void reloadProduct(int merIdx) {
 		if(merIdx<0)return;
 		curmer=merchant.get(merIdx);
+		BeanMerchant.currentLogin=curmer;
 		try {
 			product=TakeAwayUtil.merchantManager.loadallP(curmer);
 		}catch(BaseException e1) {

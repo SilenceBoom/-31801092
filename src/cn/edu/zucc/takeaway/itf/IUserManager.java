@@ -20,8 +20,8 @@ public interface IUserManager {
 	public void changePwd(BeanUser user ,String old,String new1,String new2) throws BaseException;
 	public BeanAddress getAddress(BeanUser user) throws BaseException;
 	public void toBeVip()throws BaseException;
-	public List<BeanOrder1> loadallorder() throws BaseException;
-	public List<BeanOrder2> loadallorder2(BeanOrder1 order) throws BaseException;
+	public List<BeanOrder2> loadallorder() throws BaseException;
+	public List<BeanOrder2> loadallorder2() throws BaseException;
 	public void Add(BeanPro product)throws BaseException;
 	public void changeCount(int n)throws BaseException;
 	public void deleteAdd()throws BaseException;

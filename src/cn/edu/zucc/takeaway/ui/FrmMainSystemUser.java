@@ -103,6 +103,10 @@ public class FrmMainSystemUser extends JFrame implements ActionListener{
 		    		dlg.setVisible(true);
 		    		
 		    	}
+		    	else if(e.getSource()==this.menuItem_RiderInf) {
+		    		FrmRiderGet dlg=new FrmRiderGet(this,"∆Ô ÷Ω”µ•",true);
+		    		dlg.setVisible(true);
+		    	}
 		    }
 
 	

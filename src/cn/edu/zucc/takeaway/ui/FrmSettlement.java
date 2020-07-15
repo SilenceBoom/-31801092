@@ -50,6 +50,7 @@ public class FrmSettlement extends JDialog implements ActionListener {
 		// TODO Auto-generated method stub
 		if(e.getSource()==this.btnOk) {
 			try{
+				TakeAwayUtil.merchantManager.AddOrder(TakeAwayUtil.userManager.settlement());
 				TakeAwayUtil.userManager.initBuy();
 				this.setVisible(false);
 			}catch(BaseException ex) {

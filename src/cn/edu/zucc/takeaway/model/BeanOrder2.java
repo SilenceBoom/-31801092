@@ -3,9 +3,16 @@ package cn.edu.zucc.takeaway.model;
 import java.util.Date;
 
 public class BeanOrder2 {
-	public static final String[] tableTitles={"商家名称","原始金额","结算金额","骑手姓名","下单时间","配送地址","用户姓名","联系电话"};
+	public static final String[] tableTitles={"订单编号","商家名称","结算金额","骑手姓名","下单时间","配送地址","用户姓名","联系电话"};
 	private String merchantname;
-	private double initamount;
+	private int orderId;
+	public int getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+	//private double initamount;
 	private double settamount;
 	private String ridername;
 	private Date ordertime;
@@ -25,12 +32,12 @@ public class BeanOrder2 {
 	public void setMerchantname(String merchantname) {
 		this.merchantname = merchantname;
 	}
-	public double getInitamount() {
-		return initamount;
-	}
-	public void setInitamount(double initamount) {
-		this.initamount = initamount;
-	}
+//	public double getInitamount() {
+//		return initamount;
+//	}
+//	public void setInitamount(double initamount) {
+//		this.initamount = initamount;
+//	}
 	public double getSettamount() {
 		return settamount;
 	}
@@ -62,15 +69,15 @@ public class BeanOrder2 {
 		this.usernumber = usernumber;
 	}
 	public String getCell(int col){
-		if(col==0) {
+		if(col==0) return String.valueOf(orderId);
+	else if(col==1) {
 			return merchantname;
 		}
-		else if(col==1) return String.valueOf(initamount);
+	//else if(col==1) return String.valueOf(initamount);
 		else if(col==2) return String.valueOf(settamount); 
 		else if(col==3) return ridername;
 		else if(col==4) {
-			java.text.SimpleDateFormat time=new java.text.SimpleDateFormat("yyyy-MM-dd");
-			return time.format(ordertime);
+			return String.valueOf(ordertime);
 		}
 		else if (col==5) return address;
 		else if (col==6) return username;

@@ -218,4 +218,51 @@ try {
 				}
 		}
 	}
+	public void AddOrder(double n) throws BaseException{
+	            	Connection conn=null;
+		        try {
+					
+					conn=DBUtil.getConnection();
+					String sql="insert into ordersheet(riderId,merchantId,settAmount,orderTime,addressId) values(1,?,?,now(),1)";
+					java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+					pst.setInt(1, BeanMerchant.currentLogin.getMerchantid());
+					pst.setDouble(2, n);
+					pst.execute();
+				}catch (SQLException e) {
+					e.printStackTrace();
+					throw new DbException(e);
+				}
+				finally{
+					if(conn!=null)
+						try {
+							conn.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				}
+	}
+	public void deleteOrder(BeanOrder2 order)throws BaseException{
+	  	Connection conn=null;
+        try {
+			
+			conn=DBUtil.getConnection();
+			String sql="delete from ordersheet where orderId=?";
+			java.sql.PreparedStatement pst=conn.prepareStatement(sql);
+			pst.setInt(1, order.getOrderId());
+			pst.execute();
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DbException(e);
+		}
+		finally{
+			if(conn!=null)
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
 }

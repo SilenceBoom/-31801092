@@ -323,19 +323,25 @@ public class UserManager implements IUserManager{
 		}
 		
 	}
-	public List<BeanOrder1> loadallorder() throws BaseException{
-		List<BeanOrder1> result=new ArrayList<BeanOrder1>();
+	public List<BeanOrder2> loadallorder() throws BaseException{
+		List<BeanOrder2> result=new ArrayList<BeanOrder2>();
 		Connection conn=null;
 		try {
 			
 			conn=DBUtil.getConnection();
-			String sql="select * from order1";
+			String sql="select * from order2 where orderId in(select orderId from ordersheet where requireTime is null)";
 			java.sql.Statement st=conn.createStatement();
 			java.sql.ResultSet rs=st.executeQuery(sql);
 			while(rs.next()) {
-				 BeanOrder1 p=new BeanOrder1();
-				 p.setMerchantName(rs.getString(1));
-				 p.setSum(rs.getDouble(2));
+				 BeanOrder2 p=new BeanOrder2();
+				 p.setOrderId(rs.getInt(1));
+				 p.setMerchantname(rs.getString(2));
+				 p.setSettamount(rs.getDouble(3));
+				 p.setRidername(rs.getString(4));
+				 p.setOrdertime(rs.getDate(5));
+				 p.setAddress(rs.getString(6));
+				 p.setUsername(rs.getString(7));
+				 p.setUsernumber(rs.getString(8));;
 		         result.add(p);
 			}
 		    rs.close();
@@ -356,19 +362,19 @@ public class UserManager implements IUserManager{
 				}
 		}
 	}
-	public List<BeanOrder2> loadallorder2(BeanOrder1 order) throws BaseException{
+	public List<BeanOrder2> loadallorder2() throws BaseException{
 		List<BeanOrder2> result=new ArrayList<BeanOrder2>();
 		Connection conn=null;
 		try {
 			
 			conn=DBUtil.getConnection();
-			String sql="select * from order2 where merchantName = '"+order.getMerchantName()+"'";
+			String sql="select * from order2 ";
 			java.sql.Statement st=conn.createStatement();
 			java.sql.ResultSet rs=st.executeQuery(sql);
 			while(rs.next()) {
 				 BeanOrder2 p=new BeanOrder2();
-				 p.setMerchantname(rs.getString(1));
-				 p.setInitamount(rs.getDouble(2));
+				 p.setOrderId(rs.getInt(1));
+				 p.setMerchantname(rs.getString(2));
 				 p.setSettamount(rs.getDouble(3));
 				 p.setRidername(rs.getString(4));
 				 p.setOrdertime(rs.getDate(5));
@@ -462,6 +468,11 @@ public class UserManager implements IUserManager{
 			pst.setInt(1, n);
 			pst.setString(2,productName);
 			pst.execute();
+			sql="update productdetail set count=count-? where productName=?";
+			pst=conn.prepareStatement(sql);
+			pst.setInt(1, n);
+			pst.setString(2,productName);
+			pst.execute();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -491,7 +502,7 @@ public class UserManager implements IUserManager{
 			}
 			sql="delete from buy where prorder=?";
 			pst=conn.prepareStatement(sql);
-			pst.setInt(2,orderid );
+			pst.setInt(1,orderid );
 			pst.execute();
 		}
 		catch (SQLException e) {
@@ -537,6 +548,11 @@ public class UserManager implements IUserManager{
 				String sql="delete from buy where productName=?";
 				java.sql.PreparedStatement pst=conn.prepareStatement(sql);
 				pst.setString(1, buy.getProductName());
+				pst.execute();
+				sql="update productdetail set count=count+? where productName=?";
+				pst=conn.prepareStatement(sql);
+				pst.setInt(1, buy.getBuyCount());
+				pst.setString(2, buy.getProductName());
 				pst.execute();
 			}
 			catch (SQLException e) {

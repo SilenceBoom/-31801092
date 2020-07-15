@@ -1,6 +1,7 @@
 package cn.edu.zucc.takeaway.model;
 
 public class BeanMerchant {
+	public static BeanMerchant currentLogin=null;
 	public static final String[] tableTitles={"商家编号","商家名称","商家星级","人均消费","总销量"};
 	private int merchantid;
 	private String merchantname;
